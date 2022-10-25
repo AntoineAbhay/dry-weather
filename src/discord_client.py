@@ -36,7 +36,7 @@ class MyClient(discord.Client):
         discord_message = await channel.send(
             get_driest_moments_message(aggregated_data, NB_DAYS_FROM_NOW)
         )
-        thread = await discord_message.create_thread(name="Driest times")
+        thread = await discord_message.create_thread(name="Driest times", auto_archive_duration=24 * 60)
         await thread.send(get_complete_message(aggregated_data, HUMIDITY_THRESHOLD))
         print("Send driest moment finished")
 
