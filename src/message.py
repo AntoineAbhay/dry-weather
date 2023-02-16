@@ -2,6 +2,7 @@ from typing import List
 from get_driest_moment import get_driest_moment
 from format_moment import format_moment
 
+
 def get_driest_moments_message(data, nb_days_from_now_options: List) -> str:
     dry_moments = [
         format_moment(get_driest_moment(data, nb_days_from_now), nb_days_from_now)
@@ -10,14 +11,11 @@ def get_driest_moments_message(data, nb_days_from_now_options: List) -> str:
     message = "\n".join(dry_moments)
     return f"Driest times:\n{message}"
 
+
 def get_complete_message(data, humidity_threshold) -> str:
-    all_data_message = "\n".join(
-            [format_moment(moment) for moment in data]
-        )
+    all_data_message = "\n".join([format_moment(moment) for moment in data])
     filtered_data = [
-        moment
-        for moment in data
-        if moment["values"]["humidity"] < humidity_threshold
+        moment for moment in data if moment["values"]["humidity"] < humidity_threshold
     ]
     filtered_data_message = "\n".join(
         [format_moment(moment) for moment in filtered_data]
@@ -30,6 +28,13 @@ def get_complete_message(data, humidity_threshold) -> str:
     ]
     filtered_data_sorted_message = "\n".join(filtered_data_sorted)
 
-    return (f"Forecast (Humidity < {humidity_threshold}%):\n```{filtered_data_message}```\n"
-        + f"Sorted:\n```{filtered_data_sorted_message}```\n"
-        + f"Full:\n```{all_data_message}```")
+    complete_message = ""
+    if filtered_data_message:
+        complete_message += f"Forecast (Humidity < {humidity_threshold}%):\n```{filtered_data_message}```\n"
+    else:
+        complete_message += "No dry weather soon (Humidity < {humidity_threshold}%)\n"
+    if filtered_data_sorted_message:
+        complete_message += f"Sorted:\n```{filtered_data_sorted_message}```\n"
+    complete_message += f"Full forecast:\n```{all_data_message}```"
+
+    return complete_message
