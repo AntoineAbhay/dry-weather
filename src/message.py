@@ -32,7 +32,7 @@ def get_complete_message(data, humidity_threshold) -> str:
     if filtered_data_message:
         complete_message += f"Forecast (Humidity < {humidity_threshold}%):\n```{filtered_data_message}```\n"
     else:
-        complete_message += "No dry weather soon (Humidity < {humidity_threshold}%)\n"
+        complete_message += f"No dry weather soon (Humidity < {humidity_threshold}%)\n"
     if filtered_data_sorted_message:
         complete_message += f"Sorted:\n```{filtered_data_sorted_message}```\n"
     complete_message += f"Full forecast:\n```{all_data_message}```"
