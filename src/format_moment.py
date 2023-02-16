@@ -9,7 +9,7 @@ def get_friendly_moment(date, period):
         return f"Tomorrow {period}"
     time_delta = date - datetime.today().date()
     if time_delta.days < 7:
-        return date.strftime("%A")
+        return f"{date.strftime('%A')} {period}"
     formatted_date = date.strftime("%a %d/%m")
     return f"{formatted_date}"
 
